@@ -17,11 +17,20 @@
       color: #f5f5f5;
     }
 
-    .topbar {
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .left-section,
+    .right-section {
       display: flex;
       align-items: center;
       gap: 15px;
-      margin-bottom: 20px;
     }
 
     .theme-toggle {
@@ -36,13 +45,6 @@
     #welcomeUser {
       font-weight: bold;
       font-size: 16px;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
     }
 
     .btn {
@@ -70,43 +72,19 @@
     body.dark #adminOnly {
       background: #2d2d44;
     }
-
-    .extra-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      margin-bottom: 20px;
-    }
-
-    .extra-buttons button {
-      background: #6a00f4;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .extra-buttons button:hover {
-      background: #5200b3;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Topbar: Témaváltó és üdvözlés egy sorban -->
-  <div class="topbar">
-    <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
-    <span id="welcomeUser">Üdvözlünk!</span>
-  </div>
-
   <header>
-    <div></div> <!-- helykitöltő a bal oldalra -->
-    <div class="extra-buttons">
-      <button onclick="location.href='change-password.html'">🔐 Jelszó módosítása</button>
-      <button onclick="logout()">Kijelentkezés</button>
+    <div class="left-section">
+      <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+      <span id="welcomeUser">Üdvözlünk!</span>
+    </div>
+
+    <div class="right-section">
+      <button class="btn" onclick="location.href='change-password.html'">🔐 Jelszó módosítása</button>
+      <button class="btn" onclick="logout()">Kijelentkezés</button>
     </div>
   </header>
 
