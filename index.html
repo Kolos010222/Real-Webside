@@ -80,6 +80,28 @@
       border-radius: 10px;
       cursor: pointer;
     }
+
+    .extra-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .extra-buttons button {
+      flex: 1;
+      padding: 10px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #6a00f4;
+      color: white;
+      transition: 0.3s;
+    }
+    .extra-buttons button:hover {
+      background: #5200b3;
+    }
   </style>
 </head>
 <body>
@@ -92,7 +114,11 @@
       <input type="password" id="password" placeholder="Jelszó" required />
       <button type="submit">Belépés</button>
     </form>
-    <p><button onclick="location.href='register.html'">Regisztráció</button></p>
+
+    <div class="extra-buttons">
+      <button onclick="location.href='register.html'">Regisztráció</button>
+      <button onclick="location.href='change-password.html'">Jelszó módosítása</button>
+    </div>
   </div>
 
   <script>
