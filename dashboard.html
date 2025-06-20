@@ -109,6 +109,11 @@
       width: 90%;
       text-align: center;
       box-shadow: 0 0 12px rgba(0,0,0,0.3);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark #deleteModal > div {
+      background: #2d2d44;
+      color: #f5f5f5;
     }
     #deleteModal button {
       margin: 5px;
@@ -118,12 +123,21 @@
       cursor: pointer;
       font-weight: bold;
       color: white;
+      transition: background-color 0.3s;
     }
     #confirmDelete {
       background-color: #e63946;
     }
+    #confirmDelete:hover {
+      background-color: #b32a36;
+    }
     #cancelDelete {
       background-color: #aaa;
+      color: #222;
+    }
+    #cancelDelete:hover {
+      background-color: #888;
+      color: white;
     }
   </style>
 </head>
