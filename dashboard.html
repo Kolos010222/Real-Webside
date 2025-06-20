@@ -22,6 +22,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
+      margin-left: 100px; /* Eltolás, hogy ne legyen közel a témaváltó gombhoz */
     }
 
     .btn {
@@ -40,14 +41,15 @@
 
     .theme-toggle {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 10px;    /* Feljebb */
+      left: 10px;   /* Balra */
       background: #6a00f4;
       color: white;
       border: none;
       padding: 8px 12px;
       border-radius: 10px;
       cursor: pointer;
+      z-index: 9999; /* Előre hozás */
     }
 
     #adminOnly {
