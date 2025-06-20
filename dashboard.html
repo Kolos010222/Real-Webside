@@ -177,66 +177,66 @@
     document.body.classList.toggle('dark');
   }
 
+  // Kijelentkezés
+  function logout() {
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("isAdmin");
+    location.href = "index.html";
+  }
 
-    // Kijelentkezés
-    function logout() {
-      localStorage.removeItem("loggedInUser");
-      localStorage.removeItem("isAdmin");
-      location.href = "index.html";
-    }
+  // Felhasználó és jogosultság ellenőrzése
+  const user = localStorage.getItem("loggedInUser") || "Ismeretlen";
+  const isAdmin = localStorage.getItem(user + "_isAdmin") === "true";
+  document.getElementById("welcomeUser").textContent = `Üdv, ${user}!`;
 
-    // Felhasználó betöltés
-    const user = localStorage.getItem("loggedInUser") || "Ismeretlen";
-    const isAdmin = localStorage.getItem(user + "_isAdmin") === "true";
-    document.getElementById("welcomeUser").textContent = `Üdv, ${user}!`;
+  // Admin panel elrejtése, ha nem admin
+  if (!isAdmin) {
+    document.getElementById("adminOnly").style.display = "none";
+  }
 
-    // Admin panel elrejtése ha nem admin
-    if (!isAdmin) {
-      document.getElementById("adminOnly").style.display = "none";
-    }
+  // Bejegyzések betöltése
+  const postContainer = document.getElementById('postsContainer');
+  const posts = JSON.parse(localStorage.getItem('posts') || '[]');
 
-    // Bejegyzések betöltése
-    const postContainer = document.getElementById('postsContainer');
-    const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-
-    if (posts.length === 0) {
-      postContainer.innerHTML = "<p>Nincs még bejegyzés.</p>";
-    } else {
-      posts.slice().reverse().forEach((post, index) => {
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <h3>${post.title}</h3>
-          <p style="font-size: 12px; color: gray;">${post.date}</p>
-          <p>${post.content}</p>
-          ${isAdmin ? `<button onclick="showDeleteModal(${posts.length - 1 - index})" style="margin-top:10px; background:#e63946; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">🗑 Törlés</button>` : ""}
-        `;
-        postContainer.appendChild(div);
-      });
-    }
-
-    // Modális törlés
-    let deleteIndex = null;
-
-    function showDeleteModal(index) {
-      deleteIndex = index;
-      document.getElementById('deleteModal').style.display = 'flex';
-    }
-
-    document.getElementById('confirmDelete').addEventListener('click', () => {
-      if (deleteIndex !== null) {
-        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-        posts.splice(deleteIndex, 1);
-        localStorage.setItem('posts', JSON.stringify(posts));
-        deleteIndex = null;
-        document.getElementById('deleteModal').style.display = 'none';
-        location.reload();
-      }
+  if (posts.length === 0) {
+    postContainer.innerHTML = "<p>Nincs még bejegyzés.</p>";
+  } else {
+    posts.slice().reverse().forEach((post, index) => {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <h3>${post.title}</h3>
+        <p style="font-size: 12px; color: gray;">${post.date}</p>
+        <p>${post.content}</p>
+        ${isAdmin ? `<button onclick="showDeleteModal(${posts.length - 1 - index})" style="margin-top:10px; background:#e63946; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">🗑 Törlés</button>` : ""}
+      `;
+      postContainer.appendChild(div);
     });
+  }
 
-    document.getElementById('cancelDelete').addEventListener('click', () => {
+  // Modális törlés kezelése
+  let deleteIndex = null;
+
+  function showDeleteModal(index) {
+    deleteIndex = index;
+    document.getElementById('deleteModal').style.display = 'flex';
+  }
+
+  document.getElementById('confirmDelete').addEventListener('click', () => {
+    if (deleteIndex !== null) {
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      posts.splice(deleteIndex, 1);
+      localStorage.setItem('posts', JSON.stringify(posts));
       deleteIndex = null;
       document.getElementById('deleteModal').style.display = 'none';
-    });
-  </script>
+      location.reload();
+    }
+  });
+
+  document.getElementById('cancelDelete').addEventListener('click', () => {
+    deleteIndex = null;
+    document.getElementById('deleteModal').style.display = 'none';
+  });
+</script>
+
 </body>
 </html>
