@@ -141,14 +141,25 @@
     if (posts.length === 0) {
       postContainer.innerHTML = "<p>Nincs még bejegyzés.</p>";
     } else {
-      posts.reverse().forEach(post => {
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <h3>${post.title}</h3>
-          <p style="font-size: 12px; color: gray;">${post.date}</p>
-          <p>${post.content}</p>
-        `;
-        postContainer.appendChild(div);
+          posts.reverse().forEach((post, index) => {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <h3>${post.title}</h3>
+        <p style="font-size: 12px; color: gray;">${post.date}</p>
+        <p>${post.content}</p>
+        ${isAdmin ? `<button onclick="deletePost(${posts.length - 1 - index})" style="margin-top:10px; background:#e63946; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">🗑 Törlés</button>` : ""}
+      `;
+      postContainer.appendChild(div);
+    });
+
+    function deletePost(index) {
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      if (confirm("Biztosan törlöd ezt a bejegyzést?")) {
+        posts.splice(index, 1);
+        localStorage.setItem('posts', JSON.stringify(posts));
+        location.reload();
+      }
+    }
       });
     }
   </script>
