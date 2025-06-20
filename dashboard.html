@@ -55,10 +55,33 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
     }
 
     body.dark #adminOnly {
       background: #2d2d44;
+    }
+
+    .extra-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .extra-buttons button {
+      background: #6a00f4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .extra-buttons button:hover {
+      background: #5200b3;
     }
   </style>
 </head>
@@ -67,7 +90,10 @@
 
   <header>
     <span id="welcomeUser">Üdvözlünk!</span>
-    <button class="btn" onclick="logout()">Kijelentkezés</button>
+    <div class="extra-buttons">
+      <button onclick="location.href='change-password.html'">🔐 Jelszó módosítása</button>
+      <button onclick="logout()">Kijelentkezés</button>
+    </div>
   </header>
 
   <h1>🎉 Dashboard oldal</h1>
