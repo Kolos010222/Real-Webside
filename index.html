@@ -2,103 +2,96 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <title>Bejelentkezés</title>
+  <title>Dashboard</title>
   <style>
-    :root {
-      --primary: #6a00f4;
-      --primary-dark: #3700b3;
-      --accent: #00c3ff;
-      --bg-light: #f4f6ff;
-      --bg-dark: #1a1a2e;
-      --text-light: #222;
-      --text-dark: #f5f5f5;
-      --box-bg-light: #fff;
-      --box-bg-dark: #2d2d44;
-    }
-
     body {
+      font-family: Arial, sans-serif;
+      background: #f4f6ff;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 20px;
       transition: 0.3s;
     }
 
     body.dark {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
+      background: #1a1a2e;
+      color: #f5f5f5;
     }
 
-    .login-box {
-      background: var(--box-bg-light);
-      padding: 40px;
-      border-radius: 14px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-      width: 320px;
-      text-align: center;
-      transition: 0.3s;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    body.dark .login-box {
-      background: var(--box-bg-dark);
-    }
-
-    .login-box h2 {
-      margin-bottom: 24px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    .btn {
-      width: 100%;
-      background: linear-gradient(to right, var(--primary), var(--accent));
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
+    .left-section,
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
     .theme-toggle {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: var(--primary);
-      border: none;
+      background: #6a00f4;
       color: white;
+      border: none;
       padding: 8px 12px;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
     }
 
-    a {
-      display: inline-block;
-      margin-top: 15px;
-      color: var(--primary);
-      text-decoration: none;
+    #welcomeUser {
+      font-weight: bold;
+      font-size: 16px;
     }
 
-    /* Modális ablak stílus */
-    #modal {
+    .btn {
+      background: #6a00f4;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #4a00b0;
+    }
+
+    #adminOnly {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    body.dark #adminOnly {
+      background: #2d2d44;
+    }
+
+    #postsContainer > div {
+      background: white;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+
+    body.dark #postsContainer > div {
+      background: #2d2d44;
+      color: white;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    /* Modális stílus */
+    #deleteModal {
       display: none;
       position: fixed;
       top: 0; left: 0;
@@ -108,48 +101,64 @@
       align-items: center;
       z-index: 10000;
     }
-    #modal > div {
-      background: white;
-      padding: 20px 30px;
+    #deleteModal > div {
+      background: #fff;
+      padding: 20px;
       border-radius: 10px;
-      max-width: 300px;
+      max-width: 320px;
       width: 90%;
       text-align: center;
       box-shadow: 0 0 12px rgba(0,0,0,0.3);
-      font-weight: bold;
-      color: #e63946;
     }
-    #modal button {
-      margin-top: 20px;
-      padding: 8px 20px;
+    #deleteModal button {
+      margin: 5px;
+      padding: 8px 16px;
       border: none;
-      border-radius: 6px;
-      background: #6a00f4;
-      color: white;
+      border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      color: white;
+    }
+    #confirmDelete {
+      background-color: #e63946;
+    }
+    #cancelDelete {
+      background-color: #aaa;
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()">🌗 Téma</button>
 
-  <div class="login-box">
-    <h2>Bejelentkezés</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Felhasználónév" required />
-      <input type="password" id="password" placeholder="Jelszó" required />
-      <button type="submit" class="btn">Belépés</button>
-    </form>
-    <a href="register.html">Regisztráció</a>
+  <header>
+    <div class="left-section">
+      <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+      <span id="welcomeUser">Üdvözlünk!</span>
+    </div>
+
+    <div class="right-section">
+      <button class="btn" onclick="location.href='change-password.html'">🔐 Jelszó módosítása</button>
+      <button class="btn" onclick="logout()">Kijelentkezés</button>
+    </div>
+  </header>
+
+  <h1>🎉 Dashboard oldal</h1>
+
+  <div id="adminOnly">
+    <h2>🔒 Admin funkciók</h2>
+    <button class="btn" onclick="location.href='create-post.html'">➕ Bejegyzés írása</button>
   </div>
 
-  <!-- Modális ablak -->
-  <div id="modal" onclick="hideModal()">
-    <div id="modalContent">
-      Hiba történt
-      <br />
-      <button onclick="hideModal()">OK</button>
+  <div id="postList">
+    <h2>📚 Bejegyzések</h2>
+    <div id="postsContainer"></div>
+  </div>
+
+  <!-- Törlés megerősítő modális -->
+  <div id="deleteModal">
+    <div>
+      <p>Tényleg törölni szeretnéd a bejegyzést?</p>
+      <button id="confirmDelete">Igen</button>
+      <button id="cancelDelete">Mégse</button>
     </div>
   </div>
 
@@ -158,37 +167,58 @@
       document.body.classList.toggle('dark');
     }
 
-    function showModal(message) {
-      const modal = document.getElementById('modal');
-      const modalContent = document.getElementById('modalContent');
-      modalContent.childNodes[0].nodeValue = message;
-      modal.style.display = 'flex';
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
     }
 
-    function hideModal() {
-      document.getElementById('modal').style.display = 'none';
+    const user = localStorage.getItem("loggedInUser") || "Ismeretlen";
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    document.getElementById("welcomeUser").textContent = `Üdv, ${user}!`;
+
+    if (!isAdmin) {
+      document.getElementById("adminOnly").style.display = "none";
     }
 
-    document.getElementById('loginForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+    const postContainer = document.getElementById('postsContainer');
+    const posts = JSON.parse(localStorage.getItem('posts') || '[]');
 
-      const storedPass = localStorage.getItem(username);
-      if (!storedPass) {
-        showModal("Nem létező felhasználónév!");
-        return;
+    if (posts.length === 0) {
+      postContainer.innerHTML = "<p>Nincs még bejegyzés.</p>";
+    } else {
+      posts.slice().reverse().forEach((post, index) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <h3>${post.title}</h3>
+          <p style="font-size: 12px; color: gray;">${post.date}</p>
+          <p>${post.content}</p>
+          ${isAdmin ? `<button onclick="showDeleteModal(${posts.length - 1 - index})" style="margin-top:10px; background:#e63946; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">🗑 Törlés</button>` : ""}
+        `;
+        postContainer.appendChild(div);
+      });
+    }
+
+    let deleteIndex = null;
+
+    function showDeleteModal(index) {
+      deleteIndex = index;
+      document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    document.getElementById('confirmDelete').addEventListener('click', () => {
+      if (deleteIndex !== null) {
+        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        posts.splice(deleteIndex, 1);
+        localStorage.setItem('posts', JSON.stringify(posts));
+        deleteIndex = null;
+        document.getElementById('deleteModal').style.display = 'none';
+        location.reload();
       }
-      if (storedPass !== password) {
-        showModal("Hibás jelszó!");
-        return;
-      }
+    });
 
-      localStorage.setItem("loggedInUser", username);
-      const isAdmin = localStorage.getItem(username + "_isAdmin") === "true";
-      localStorage.setItem("isAdmin", isAdmin);
-
-      location.href = "dashboard.html";
+    document.getElementById('cancelDelete').addEventListener('click', () => {
+      deleteIndex = null;
+      document.getElementById('deleteModal').style.display = 'none';
     });
   </script>
 </body>
