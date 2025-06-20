@@ -17,12 +17,32 @@
       color: #f5f5f5;
     }
 
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .theme-toggle {
+      background: #6a00f4;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #welcomeUser {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
-      margin-left: 100px; /* Eltolás, hogy ne legyen közel a témaváltó gombhoz */
     }
 
     .btn {
@@ -37,19 +57,6 @@
 
     .btn:hover {
       background: #4a00b0;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 10px;    /* Feljebb */
-      left: 10px;   /* Balra */
-      background: #6a00f4;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      z-index: 9999; /* Előre hozás */
     }
 
     #adminOnly {
@@ -88,10 +95,15 @@
   </style>
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+
+  <!-- Topbar: Témaváltó és üdvözlés egy sorban -->
+  <div class="topbar">
+    <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+    <span id="welcomeUser">Üdvözlünk!</span>
+  </div>
 
   <header>
-    <span id="welcomeUser">Üdvözlünk!</span>
+    <div></div> <!-- helykitöltő a bal oldalra -->
     <div class="extra-buttons">
       <button onclick="location.href='change-password.html'">🔐 Jelszó módosítása</button>
       <button onclick="logout()">Kijelentkezés</button>
