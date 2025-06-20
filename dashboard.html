@@ -166,11 +166,17 @@
     </div>
   </div>
 
-  <script>
-    // Téma váltás
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
+<script>
+  // Ha nincs bejelentkezett felhasználó, visszadob a főoldalra
+  if (!localStorage.getItem("loggedInUser")) {
+    window.location.replace("index.html");
+  }
+
+  // Téma váltás
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+  }
+
 
     // Kijelentkezés
     function logout() {
