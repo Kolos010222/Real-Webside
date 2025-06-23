@@ -2,119 +2,162 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard</title>
+  <title>Bejelentkezés</title>
   <style>
+    :root {
+      --primary: #6a00f4;
+      --accent: #00c3ff;
+      --bg-light: #f4f6ff;
+      --bg-dark: #1a1a2e;
+      --text-light: #222;
+      --text-dark: #f5f5f5;
+      --box-bg-light: #fff;
+      --box-bg-dark: #2d2d44;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6ff;
+      background-color: var(--bg-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-light);
       margin: 0;
-      padding: 20px;
-      transition: 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     body.dark {
-      background: #1a1a2e;
-      color: #f5f5f5;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      gap: 20px;
-      flex-wrap: wrap;
+    .container {
+      background: var(--box-bg-light);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      width: 320px;
+      text-align: center;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    .left-section,
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .theme-toggle {
-      background: #6a00f4;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    #welcomeUser {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .btn {
-      background: #6a00f4;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #4a00b0;
-    }
-
-    #adminOnly {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-
-    body.dark #adminOnly {
-      background: #2d2d44;
-    }
-
-    #postsContainer > div {
-      background: white;
-      padding: 16px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
-    }
-
-    body.dark #postsContainer > div {
-      background: #2d2d44;
-      color: white;
+    body.dark .container {
+      background: var(--box-bg-dark);
+      color: var(--text-dark);
     }
 
     h2 {
-      margin-top: 40px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    body.dark h2 {
+      color: var(--accent);
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+      background-color: white;
+      color: black;
+    }
+
+    body.dark input[type="text"], body.dark input[type="password"] {
+      background-color: #44475a;
+      color: white;
+      border-color: #555;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.3s, transform 0.2s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      transform: scale(1.05);
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Kicsi, lekerekített fix témaváltó gomb */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--primary);
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s;
+      width: auto;
+      min-width: 50px;
+      text-align: center;
+      user-select: none;
+      z-index: 1000;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
+  <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
 
-  <header>
-    <div class="left-section">
-      <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
-      <span id="welcomeUser">Üdvözlünk!</span>
-    </div>
+  <div class="container">
+    <h2>Bejelentkezés</h2>
+    <form onsubmit="login(event)">
+      <input type="text" id="username" placeholder="Felhasználónév" required /><br />
+      <input type="password" id="password" placeholder="Jelszó" required /><br />
+      <button type="submit">Belépek</button>
+    </form>
 
-    <div class="right-section">
-      <button class="btn" onclick="location.href='change-password.html'">🔐 Jelszó módosítása</button>
-      <button class="btn" onclick="logout()">Kijelentkezés</button>
-    </div>
-  </header>
-
-  <h1>🎉 Dashboard oldal</h1>
-
-  <div id="adminOnly">
-    <h2>🔒 Admin funkciók</h2>
-    <button class="btn" onclick="location.href='create-post.html'">➕ Bejegyzés írása</button>
-  </div>
-
-  <div id="postList">
-    <h2>📚 Bejegyzések</h2>
-    <div id="postsContainer"></div>
+    <button onclick="location.href='register.html'">Regisztráció</button>
   </div>
 
   <script>
@@ -122,44 +165,19 @@
       document.body.classList.toggle('dark');
     }
 
-    function logout() {
-      localStorage.clear();
-      sessionStorage.clear();
-      window.location.replace("index.html");
-    }
+    function login(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const stored = localStorage.getItem(username);
 
-    const user = localStorage.getItem("loggedInUser") || "Ismeretlen";
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
-    document.getElementById("welcomeUser").textContent = `Üdv, ${user}!`;
-
-    if (!isAdmin) {
-      document.getElementById("adminOnly").style.display = "none";
-    }
-
-    const postContainer = document.getElementById('postsContainer');
-    const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-
-    if (posts.length === 0) {
-      postContainer.innerHTML = "<p>Nincs még bejegyzés.</p>";
-    } else {
-      posts.slice().reverse().forEach((post, index) => {
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <h3>${post.title}</h3>
-          <p style="font-size: 12px; color: gray;">${post.date}</p>
-          <p>${post.content}</p>
-          ${isAdmin ? `<button onclick="deletePost(${posts.length - 1 - index})" style="margin-top:10px; background:#e63946; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">🗑 Törlés</button>` : ""}
-        `;
-        postContainer.appendChild(div);
-      });
-    }
-
-    function deletePost(index) {
-      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-      if (confirm("Biztosan törlöd ezt a bejegyzést?")) {
-        posts.splice(index, 1);
-        localStorage.setItem('posts', JSON.stringify(posts));
-        location.reload();
+      if (stored === null) {
+        alert("Nincs ilyen felhasználó!");
+      } else if (stored !== password) {
+        alert("Hibás jelszó!");
+      } else {
+        alert("Sikeres bejelentkezés!");
+        window.location.href = "dashboard.html";
       }
     }
   </script>
